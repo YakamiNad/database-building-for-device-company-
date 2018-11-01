@@ -1,0 +1,82 @@
+{% include 'top.html' %}
+<div class="content">
+    <div class="container">
+        <h1 class="title">Models for: {{department}}</h1>
+
+        <table class="styled">
+            <thead>
+                <tr>
+                    <th>Manufacturer</th>
+                    <th>Model Number</th>
+                    <th>Max Number</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for model in department_models %}
+                    <tr class="clickable-tr" data-href="{{ url_for('departmentmanage', manufacturer=model[0], model=model[1], department=department)}}">
+                        <td>{{ model[0] }}</td>
+                        <td>{{ model[1] }}</td>
+                        <td>{{ model[2] }}</td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+    <div class="container">
+        <h1 class="title">Employees for: {{department}}</h1>
+
+        <table class="styled">
+            <thead>
+                <tr>
+                    <th>Employee ID</th>
+                    <th>Employee Name</th>
+                    <th>Dismiss <br> click to dismiss</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for employee in employee_list %}
+                    {% if employee[2] %}
+                        </tr>
+                            <td>{{ employee[0] }}</td>
+                            <td>{{ employee[1] }}</td>
+                            <td>
+                                <a href="{{url_for('dismiss', empid=employee[0], model=model, department=department, manufacturer=manufacturer)}}">
+                                    <div class="revoke-btn"></div>
+                                </a>
+                            </td>
+                        </tr>
+                    {% endif %}
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+    <div class="container">
+        <h1 class="title">Employees Avaliable</h1>
+
+        <table class="styled">
+            <thead>
+                <tr>
+                    <th>Employee ID</th>
+                    <th>Employee Name</th>
+                    <th>Assign <br> click to assign</th>
+                </tr>
+            </thead>
+            <tbody>
+                    {% for employee in employee_list %}
+                    {% if not employee[2] %}
+                        </tr>
+                            <td>{{ employee[0] }}</td>
+                            <td>{{ employee[1] }}</td>
+                            <td>
+                                <a href="{{url_for('assign', empid=employee[0], model=model, department=department, manufacturer=manufacturer)}}">
+                                    <div class="revoke-btn"></div>
+                                </a>
+                            </td>
+                        </tr>
+                    {% endif %}
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+{% include 'bottom.html' %}
